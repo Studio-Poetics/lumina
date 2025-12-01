@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, ExternalLink } from 'lucide-react';
+import { X, ExternalLink, Brain, Link, Shirt, Bot, Hand, Atom, Dna, Globe, Cpu } from 'lucide-react';
 import { Language } from '../types';
 
 interface LearnMoreModalProps {
@@ -12,15 +12,15 @@ const LearnMoreModal: React.FC<LearnMoreModalProps> = ({ isOpen, onClose, lang }
   if (!isOpen) return null;
 
   const topics = [
-    { name: 'Artificial Intelligence', nameHi: 'कृत्रिम बुद्धिमत्ता', icon: '🤖' },
-    { name: 'Blockchain Technology', nameHi: 'ब्लॉकचेन तकनीक', icon: '⛓️' },
-    { name: 'Smart Textiles', nameHi: 'स्मार्ट वस्त्र', icon: '🧵' },
-    { name: 'Robotics', nameHi: 'रोबोटिक्स', icon: '🤖' },
-    { name: 'Future Interfaces', nameHi: 'भविष्य की तकनीकें', icon: '✋' },
-    { name: 'Quantum Computing', nameHi: 'क्वांटम कंप्यूटिंग', icon: '⚛️' },
-    { name: 'Bio-Robotics', nameHi: 'बायो-रोबोटिक्स', icon: '🧬' },
-    { name: 'Metaverse', nameHi: 'मेटावर्स', icon: '🌐' },
-    { name: 'Edge Computing', nameHi: 'एज कंप्यूटिंग', icon: '💻' }
+    { name: 'Artificial Intelligence', nameHi: 'कृत्रिम बुद्धिमत्ता', icon: Brain },
+    { name: 'Blockchain Technology', nameHi: 'ब्लॉकचेन तकनीक', icon: Link },
+    { name: 'Smart Textiles', nameHi: 'स्मार्ट वस्त्र', icon: Shirt },
+    { name: 'Robotics', nameHi: 'रोबोटिक्स', icon: Bot },
+    { name: 'Future Interfaces', nameHi: 'भविष्य की तकनीकें', icon: Hand },
+    { name: 'Quantum Computing', nameHi: 'क्वांटम कंप्यूटिंग', icon: Atom },
+    { name: 'Bio-Robotics', nameHi: 'बायो-रोबोटिक्स', icon: Dna },
+    { name: 'Metaverse', nameHi: 'मेटावर्स', icon: Globe },
+    { name: 'Edge Computing', nameHi: 'एज कंप्यूटिंग', icon: Cpu }
   ];
 
   return (
@@ -74,17 +74,20 @@ const LearnMoreModal: React.FC<LearnMoreModalProps> = ({ isOpen, onClose, lang }
               {lang === 'en' ? 'Learning Topics' : 'शिक्षण विषय'}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {topics.map((topic, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-3 p-3 bg-stone-50 dark:bg-ink-950 border border-stone-200 dark:border-ink-800 rounded-sm hover:bg-stone-100 dark:hover:bg-ink-900 transition-colors"
-                >
-                  <span className="text-lg">{topic.icon}</span>
-                  <span className="text-sm font-medium text-stone-700 dark:text-stone-300">
-                    {lang === 'en' ? topic.name : topic.nameHi}
-                  </span>
-                </div>
-              ))}
+              {topics.map((topic, index) => {
+                const IconComponent = topic.icon;
+                return (
+                  <div
+                    key={index}
+                    className="flex items-center gap-3 p-3 bg-stone-50 dark:bg-ink-950 border border-stone-200 dark:border-ink-800 rounded-sm hover:bg-stone-100 dark:hover:bg-ink-900 transition-colors"
+                  >
+                    <IconComponent size={18} className="text-terracotta-500 flex-shrink-0" />
+                    <span className="text-sm font-medium text-stone-700 dark:text-stone-300">
+                      {lang === 'en' ? topic.name : topic.nameHi}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
