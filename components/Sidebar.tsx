@@ -2,7 +2,7 @@
 import React from 'react';
 import { Lesson, Language, Theme } from '../types';
 import { t } from '../utils/translations';
-import { Globe, Sun, Moon, X, Settings } from 'lucide-react';
+import { Globe, Sun, Moon, X, Settings, ExternalLink } from 'lucide-react';
 
 interface SidebarProps {
   currentLessonId: string;
@@ -14,6 +14,7 @@ interface SidebarProps {
   onToggleTheme: () => void;
   onClose?: () => void; // For mobile
   onOpenSettings: () => void;
+  onOpenLearnMore: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ 
@@ -25,7 +26,8 @@ const Sidebar: React.FC<SidebarProps> = ({
   theme,
   onToggleTheme,
   onClose,
-  onOpenSettings
+  onOpenSettings,
+  onOpenLearnMore
 }) => {
   const handleSelect = (lesson: Lesson) => {
     onSelectLesson(lesson);
@@ -41,7 +43,10 @@ const Sidebar: React.FC<SidebarProps> = ({
           <h1 className="text-2xl font-medium tracking-tight text-stone-900 dark:text-stone-100">
             Lumina
           </h1>
-          <p className="text-xs uppercase tracking-widest text-stone-500 mt-2">{t('subtitle', lang)}</p>
+          <p className="text-xs uppercase tracking-widest text-stone-500 mt-1">{t('subtitle', lang)}</p>
+          <p className="text-xs text-stone-400 dark:text-stone-500 mt-1 font-mono italic">
+            by Studio Poetics
+          </p>
         </div>
         
         {/* Mobile Close Button */}
@@ -99,17 +104,27 @@ const Sidebar: React.FC<SidebarProps> = ({
         })}
       </nav>
 
-      <div className="p-6 lg:p-8 border-t border-stone-200 dark:border-ink-800 flex justify-between items-center">
-        <p className="text-sm text-stone-500 leading-relaxed font-mono italic truncate mr-2">
-          {lang === 'en' ? '"Observe. Trust."' : '"देखो। भरोसा करो।"'}
-        </p>
-        <button 
-          onClick={onOpenSettings}
-          className="text-stone-400 hover:text-terracotta-500 transition-colors p-1"
-          title={lang === 'hi' ? 'सेटिंग्स' : 'Settings'}
+      <div className="p-6 lg:p-8 border-t border-stone-200 dark:border-ink-800 space-y-4">
+        <button
+          onClick={onOpenLearnMore}
+          className="w-full flex items-center justify-center gap-2 text-sm text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors border border-stone-200 dark:border-ink-800 px-3 py-3 rounded-sm hover:bg-stone-100 dark:hover:bg-ink-900/50"
         >
-          <Settings size={18} />
+          <ExternalLink size={14} />
+          <span className="font-medium">{lang === 'en' ? 'Learn More' : 'और जानें'}</span>
         </button>
+
+        <div className="flex justify-between items-center">
+          <p className="text-sm text-stone-500 leading-relaxed font-mono italic truncate mr-2">
+            {lang === 'en' ? '"Observe. Trust."' : '"देखो। भरोसा करो।"'}
+          </p>
+          <button
+            onClick={onOpenSettings}
+            className="text-stone-400 hover:text-terracotta-500 transition-colors p-1"
+            title={lang === 'hi' ? 'सेटिंग्स' : 'Settings'}
+          >
+            <Settings size={18} />
+          </button>
+        </div>
       </div>
     </div>
   );

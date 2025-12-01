@@ -7,6 +7,7 @@ import LessonContent from './components/LessonContent';
 import Timeline from './components/Timeline';
 import ConceptVisualizer from './components/ConceptVisualizer';
 import SettingsModal from './components/SettingsModal';
+import LearnMoreModal from './components/LearnMoreModal';
 import { getCurriculum } from './data/curriculum';
 import { Lesson, GridConfig, Language, Theme } from './types';
 import { explainPattern } from './services/geminiService';
@@ -25,6 +26,7 @@ const App: React.FC = () => {
   const [theme, setTheme] = useState<Theme>('light');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showLearnMore, setShowLearnMore] = useState(false);
   const [apiKey, setApiKey] = useState('');
   
   // Initialize curriculum based on language
@@ -131,12 +133,18 @@ const App: React.FC = () => {
   return (
     <div className="flex flex-col lg:flex-row h-screen bg-stone-50 dark:bg-ink-950 text-stone-900 dark:text-stone-100 font-sans overflow-hidden transition-colors duration-300">
       
-      <SettingsModal 
-        isOpen={showSettings} 
-        onClose={() => setShowSettings(false)} 
-        lang={lang} 
+      <SettingsModal
+        isOpen={showSettings}
+        onClose={() => setShowSettings(false)}
+        lang={lang}
         onSaveKey={handleSaveKey}
         savedKey={apiKey}
+      />
+
+      <LearnMoreModal
+        isOpen={showLearnMore}
+        onClose={() => setShowLearnMore(false)}
+        lang={lang}
       />
 
       {/* Mobile Header (Visible only on small screens) */}
@@ -159,8 +167,8 @@ const App: React.FC = () => {
           className={`w-80 h-full shadow-2xl transition-transform duration-300 transform ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`} 
           onClick={e => e.stopPropagation()}
         >
-           <Sidebar 
-            currentLessonId={currentLesson.id} 
+           <Sidebar
+            currentLessonId={currentLesson.id}
             onSelectLesson={handleLessonSelect}
             curriculum={curriculum}
             lang={lang}
@@ -169,13 +177,14 @@ const App: React.FC = () => {
             onToggleTheme={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
             onClose={() => setMobileMenuOpen(false)}
             onOpenSettings={() => setShowSettings(true)}
+            onOpenLearnMore={() => setShowLearnMore(true)}
           />
         </div>
       </div>
 
       <div className="hidden lg:block h-full shadow-lg z-20">
-         <Sidebar 
-            currentLessonId={currentLesson.id} 
+         <Sidebar
+            currentLessonId={currentLesson.id}
             onSelectLesson={handleLessonSelect}
             curriculum={curriculum}
             lang={lang}
@@ -183,6 +192,7 @@ const App: React.FC = () => {
             theme={theme}
             onToggleTheme={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
             onOpenSettings={() => setShowSettings(true)}
+            onOpenLearnMore={() => setShowLearnMore(true)}
           />
       </div>
 
