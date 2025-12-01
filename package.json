@@ -1,6 +1,7 @@
 {
   "name": "lumina-logic",
-  "private": true,
+  "private": false,
+  "homepage": "https://studio-poetics.github.io/lumina/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
