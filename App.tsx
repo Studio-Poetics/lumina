@@ -164,6 +164,7 @@ const App: React.FC = () => {
         isOpen={showWelcome}
         onClose={handleCloseWelcome}
         lang={lang}
+        onToggleLang={() => setLang(l => l === 'en' ? 'hi' : 'en')}
       />
 
       {/* Mobile Header (Visible only on small screens) */}

@@ -1,14 +1,15 @@
 import React from 'react';
-import { X, BookOpen, PenTool, Brain, Lightbulb } from 'lucide-react';
+import { X, BookOpen, PenTool, Brain, Lightbulb, Globe } from 'lucide-react';
 import { Language } from '../types';
 
 interface WelcomeSplashProps {
   isOpen: boolean;
   onClose: () => void;
   lang: Language;
+  onToggleLang: () => void;
 }
 
-const WelcomeSplash: React.FC<WelcomeSplashProps> = ({ isOpen, onClose, lang }) => {
+const WelcomeSplash: React.FC<WelcomeSplashProps> = ({ isOpen, onClose, lang, onToggleLang }) => {
   if (!isOpen) return null;
 
   const tips = [
@@ -56,12 +57,21 @@ const WelcomeSplash: React.FC<WelcomeSplashProps> = ({ isOpen, onClose, lang }) 
               {lang === 'en' ? 'Pattern Intuition • by Studio Poetics' : 'पैटर्न की समझ • Studio Poetics द्वारा'}
             </p>
           </div>
-          <button
-            onClick={onClose}
-            className="text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors p-1"
-          >
-            <X size={24} />
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={onToggleLang}
+              className="flex items-center gap-2 text-sm text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors border border-stone-200 dark:border-ink-800 px-3 py-2 rounded-sm"
+            >
+              <Globe size={14} />
+              <span className="font-medium">{lang === 'en' ? 'हिन्दी' : 'English'}</span>
+            </button>
+            <button
+              onClick={onClose}
+              className="text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors p-1"
+            >
+              <X size={24} />
+            </button>
+          </div>
         </div>
 
         {/* Content */}
