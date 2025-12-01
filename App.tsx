@@ -8,6 +8,7 @@ import Timeline from './components/Timeline';
 import ConceptVisualizer from './components/ConceptVisualizer';
 import SettingsModal from './components/SettingsModal';
 import LearnMoreModal from './components/LearnMoreModal';
+import WelcomeSplash from './components/WelcomeSplash';
 import { getCurriculum } from './data/curriculum';
 import { Lesson, GridConfig, Language, Theme } from './types';
 import { explainPattern } from './services/geminiService';
@@ -27,6 +28,7 @@ const App: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showLearnMore, setShowLearnMore] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(false);
   const [apiKey, setApiKey] = useState('');
   
   // Initialize curriculum based on language
@@ -51,11 +53,22 @@ const App: React.FC = () => {
     }
   }, [theme]);
 
-  // Load API Key from local storage
+  // Load API Key and check welcome status from local storage
   useEffect(() => {
     const storedKey = localStorage.getItem('lumina_api_key');
     if (storedKey) setApiKey(storedKey);
+
+    // Show welcome splash on first visit
+    const hasSeenWelcome = localStorage.getItem('lumina_seen_welcome');
+    if (!hasSeenWelcome) {
+      setShowWelcome(true);
+    }
   }, []);
+
+  const handleCloseWelcome = () => {
+    setShowWelcome(false);
+    localStorage.setItem('lumina_seen_welcome', 'true');
+  };
 
   const handleSaveKey = (key: string) => {
     setApiKey(key);
@@ -144,6 +157,12 @@ const App: React.FC = () => {
       <LearnMoreModal
         isOpen={showLearnMore}
         onClose={() => setShowLearnMore(false)}
+        lang={lang}
+      />
+
+      <WelcomeSplash
+        isOpen={showWelcome}
+        onClose={handleCloseWelcome}
         lang={lang}
       />
 

@@ -1,15 +1,15 @@
 
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Language } from '../types';
 
 // Helper to get client with either user key or env key
 const getAiClient = (userKey?: string) => {
-  const key = userKey || import.meta.env.VITE_API_KEY;
+  const key = userKey || import.meta.env.VITE_GEMINI_API_KEY;
   if (!key) {
     // Only warn if we intend to use it, but here we just return null
     return null;
   }
-  return new GoogleGenAI({ apiKey: key });
+  return new GoogleGenerativeAI(key);
 };
 
 export const explainPattern = async (code: string, concept: string, lang: Language, apiKey?: string): Promise<string> => {
@@ -45,9 +45,9 @@ export const explainPattern = async (code: string, concept: string, lang: Langua
     `;
 
     const model = ai.getGenerativeModel({ model: 'gemini-1.5-flash' });
-    const response = await model.generateContent(prompt);
+    const result = await model.generateContent(prompt);
 
-    return response.response.text() || (lang === 'hi' ? "मैं अभी समझा नहीं पा रहा हूँ।" : "I couldn't generate an explanation right now.");
+    return result.response.text() || (lang === 'hi' ? "मैं अभी समझा नहीं पा रहा हूँ।" : "I couldn't generate an explanation right now.");
   } catch (error) {
     console.error("Gemini API Error:", error);
     return lang === 'hi' ? "AI से संपर्क करने में त्रुटि हुई।" : "An error occurred while contacting the AI Tutor.";
